@@ -44,10 +44,10 @@ module "subnet" {
 module "security_group" {
   source = "./modules/security_group"
 
-  name        = "${var.sg_name}"
+  name = "${var.sg_name}"
   description = "${var.sg_description}"
-  vpc_id      = "${module.vpc.vpc_id}"
-  cidrs       = ["${var.sg_cidrs}"]
+  vpc_id = "${module.vpc.vpc_id}"
+  cidrs = ["${var.sg_cidrs}"]
 }
 
 resource "aws_db_subnet_group" "default" {
