@@ -60,8 +60,8 @@ module "db_subnet_group" {
   source = "./modules/db_subnet_group"
 
   name = "${var.name}"
-  subnet_id_1 = "${module.subnet.subnet_1.id}"
-  subnet_id_2 = "${module.subnet.subnet_2.id}"
+  subnet_id_1 = "${module.subnet.subnet_1_id}"
+  subnet_id_2 = "${module.subnet.subnet_2_id}"
 }
 
 module "db_instance" {
@@ -74,6 +74,6 @@ module "db_instance" {
   name = "${var.name}"
   username = "${var.rds_username}"
   password = "${var.rds_password}"
-  security_group_id = "${module.security_group.default.id}"
-  db_subnet_group_id = "${module.db_subnet_group.default.id}"
+  security_group_id = "${module.security_group.security_group_id}"
+  db_subnet_group_id = "${module.db_subnet_group.db_subnet_group_id}"
 }
