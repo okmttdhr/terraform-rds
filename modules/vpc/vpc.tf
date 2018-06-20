@@ -2,7 +2,6 @@ variable "name" { }
 variable "cidr" { }
 
 resource "aws_vpc" "default" {
-  name = "${var.name}"
   cidr_block = "${var.cidr}"
   tags {
     Name = "${var.name}"
