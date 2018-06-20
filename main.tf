@@ -50,12 +50,12 @@ module "security_group" {
   cidrs = ["${var.sg_cidrs}"]
 }
 
-resource "aws_db_subnet_group" "default" {
+module "db_subnet_group" {
+  source = "./modules/db_subnet_group"
+
   name = "${var.name}"
-  subnet_ids  = ["${aws_subnet.subnet_1.id}", "${aws_subnet.subnet_2.id}"]
-  tags {
-    Name = "${var.name}"
-  }
+  subnet_id_1 = "${module.subnet.subnet_1.id}"
+  subnet_id_2 = "${module.subnet.subnet_2.id}"
 }
 
 resource "aws_db_instance" "default" {
