@@ -16,6 +16,7 @@ variable "sg_cidrs" {
 variable "subnet_cidr_1" { }
 variable "subnet_cidr_2" { }
 
+variable "rds_identifier" { }
 variable "rds_storage" { }
 variable "rds_engine" { }
 variable "rds_engine_version" { }
