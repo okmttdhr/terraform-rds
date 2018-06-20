@@ -14,6 +14,7 @@ sg_cidrs = ["0.0.0.0/0"]
 subnet_cidr_1 = "10.0.1.0/24"
 subnet_cidr_2 = "10.0.2.0/24"
 
+rds_identifier = "your_rds_identifier"
 rds_storage = 100
 rds_engine = "mysql"
 rds_engine_version = "5.7.21"

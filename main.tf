@@ -66,6 +66,7 @@ module "db_subnet_group" {
 module "db_instance" {
   source = "./modules/db_instance"
 
+  identifier = "${var.rds_identifier}"
   storage = "${var.rds_storage}"
   engine = "${var.rds_engine}"
   engine_version = "${var.rds_engine_version}"
