@@ -42,7 +42,15 @@ module "security_group" {
   cidrs       = ["${var.sg_cidrs}"]
 }
 
-resource "db_instance" "default" {
+resource "aws_db_subnet_group" "default" {
+  name = "${var.name}"
+  subnet_ids  = ["${aws_subnet.subnet_1.id}", "${aws_subnet.subnet_2.id}"]
+  tags {
+    Name = "${var.name}"
+  }
+}
+
+resource "aws_db_instance" "default" {
   depends_on             = ["aws_security_group.default"]
   identifier             = "${var.identifier}"
   allocated_storage      = "${var.storage}"
