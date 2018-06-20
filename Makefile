@@ -4,7 +4,10 @@ init:
 	$(TERRAFORM) init
 
 prof:
-	sed -i '' s/your-aws-profile/$(PROF)/ terraform.tfvars
+	sed -i '' s/your-aws-profile/$(P)/ terraform.tfvars
+
+rds_password:
+	sed -i '' s/your-rds-password/$(P)/ terraform.tfvars
 
 plan:
 	$(TERRAFORM) plan

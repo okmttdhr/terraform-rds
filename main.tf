@@ -2,7 +2,6 @@ variable "name" { }
 variable "region" { }
 variable "profile" { }
 
-variable "az" { }
 variable "vpc_cidr" { }
 
 variable "sg_name" { }
@@ -15,6 +14,15 @@ variable "subnet_cidr_1" { }
 variable "subnet_cidr_2" { }
 variable "az_1" { }
 variable "az_2" { }
+
+variable "rds_storage" { }
+variable "rds_engine" { }
+variable "rds_engine_version" { }
+variable "rds_instance_class" { }
+variable "rds_username" { }
+variable "rds_password" { }
+
+
 
 provider "aws" {
   region  = "${var.region}"
@@ -59,13 +67,13 @@ module "db_subnet_group" {
 module "db_instance" {
   source = "./modules/db_instance"
 
-  storage = "${var.}"
-  engine = "${var.}"
-  engine_version = "${var.}"
-  instance_class = "${var.}"
+  storage = "${var.rds_storage}"
+  engine = "${var.rds_engine}"
+  engine_version = "${var.rds_engine_version}"
+  instance_class = "${var.rds_instance_class}"
   name = "${var.name}"
-  username = "${var.}"
-  password = "${var.}"
+  username = "${var.rds_username}"
+  password = "${var.rds_password}"
   security_group_id = "${module.security_group.default.id}"
   db_subnet_group_id = "${module.db_subnet_group.default.id}"
 }
