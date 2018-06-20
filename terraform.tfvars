@@ -7,8 +7,8 @@ az_2 = "ap-northeast-1c"
 
 vpc_cidr = "10.0.0.0/16"
 
-sg_name = "22_pxy"
-sg_description = "Permit ssh from proxy server."
+sg_name = "MySQL"
+sg_description = "Permit access from MySQL."
 sg_cidrs = ["0.0.0.0/0"]
 
 subnet_cidr_1 = "10.0.1.0/24"
