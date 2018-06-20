@@ -18,4 +18,5 @@ resource "aws_db_instance" "default" {
   password = "${var.password}"
   vpc_security_group_ids = ["${var.security_group_id}"]
   db_subnet_group_name   = "${var.db_subnet_group_id}"
+  skip_final_snapshot = true
 }
