@@ -4,7 +4,7 @@ init:
 	$(TERRAFORM) init
 
 prof:
-	sed -i s/your-aws-profile/$(PROF)/ terraform.tfvars
+	sed -i '' s/your-aws-profile/$(PROF)/ terraform.tfvars
 
 plan:
 	$(TERRAFORM) plan
