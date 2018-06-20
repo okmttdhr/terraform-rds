@@ -7,7 +7,6 @@ az_2 = "ap-northeast-1c"
 
 vpc_cidr = "10.0.0.0/16"
 
-sg_name = "MySQL"
 sg_description = "Permit access from MySQL."
 sg_cidrs = ["0.0.0.0/0"]
 

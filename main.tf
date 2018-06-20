@@ -7,7 +7,6 @@ variable "az_2" { }
 
 variable "vpc_cidr" { }
 
-variable "sg_name" { }
 variable "sg_description" { }
 variable "sg_cidrs" {
   type = "list"
@@ -50,7 +49,7 @@ module "subnet" {
 module "security_group" {
   source = "./modules/security_group"
 
-  name = "${var.sg_name}"
+  name = "${var.name}"
   description = "${var.sg_description}"
   vpc_id = "${module.vpc.vpc_id}"
   cidrs = ["${var.sg_cidrs}"]
