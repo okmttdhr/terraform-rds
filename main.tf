@@ -2,6 +2,9 @@ variable "name" { }
 variable "region" { }
 variable "profile" { }
 
+variable "az_1" { }
+variable "az_2" { }
+
 variable "vpc_cidr" { }
 
 variable "sg_name" { }
@@ -12,8 +15,6 @@ variable "sg_cidrs" {
 
 variable "subnet_cidr_1" { }
 variable "subnet_cidr_2" { }
-variable "az_1" { }
-variable "az_2" { }
 
 variable "rds_storage" { }
 variable "rds_engine" { }
@@ -21,8 +22,6 @@ variable "rds_engine_version" { }
 variable "rds_instance_class" { }
 variable "rds_username" { }
 variable "rds_password" { }
-
-
 
 provider "aws" {
   region  = "${var.region}"
