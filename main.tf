@@ -4,7 +4,6 @@ variable "profile" { }
 
 variable "az" { }
 variable "vpc_cidr" { }
-variable "subnet_cidr" { }
 
 variable "sg_name" { }
 variable "sg_description" { }
@@ -16,7 +15,6 @@ variable "subnet_cidr_1" { }
 variable "subnet_cidr_2" { }
 variable "az_1" { }
 variable "az_2" { }
-
 
 provider "aws" {
   region  = "${var.region}"
@@ -58,16 +56,16 @@ module "db_subnet_group" {
   subnet_id_2 = "${module.subnet.subnet_2.id}"
 }
 
-resource "aws_db_instance" "default" {
-  depends_on             = ["aws_security_group.default"]
-  identifier             = "${var.identifier}"
-  allocated_storage      = "${var.storage}"
-  engine                 = "${var.engine}"
-  engine_version         = "${lookup(var.engine_version, var.engine)}"
-  instance_class         = "${var.instance_class}"
-  name                   = "${var.name}"
-  username               = "${var.username}"
-  password               = "${var.password}"
-  vpc_security_group_ids = ["${aws_security_group.default.id}"]
-  db_subnet_group_name   = "${aws_db_subnet_group.default.id}"
+module "db_instance" {
+  source = "./modules/db_instance"
+
+  storage = "${var.}"
+  engine = "${var.}"
+  engine_version = "${var.}"
+  instance_class = "${var.}"
+  name = "${var.name}"
+  username = "${var.}"
+  password = "${var.}"
+  security_group_id = "${module.security_group.default.id}"
+  db_subnet_group_id = "${module.db_subnet_group.default.id}"
 }
