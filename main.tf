@@ -8,9 +8,6 @@ variable "az_2" { }
 variable "vpc_cidr" { }
 
 variable "sg_description" { }
-variable "sg_cidrs" {
-  type = "list"
-}
 
 variable "subnet_cidr_1" { }
 variable "subnet_cidr_2" { }
@@ -52,7 +49,6 @@ module "security_group" {
   name = "${var.name}"
   description = "${var.sg_description}"
   vpc_id = "${module.vpc.vpc_id}"
-  cidrs = ["${var.sg_cidrs}"]
 }
 
 module "db_subnet_group" {

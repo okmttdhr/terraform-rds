@@ -1,9 +1,6 @@
 variable name { }
 variable description { }
 variable vpc_id { }
-variable cidrs {
-  type = "list"
-}
 
 resource "aws_security_group" "default" {
   name = "${var.name}"
@@ -13,8 +10,8 @@ resource "aws_security_group" "default" {
     from_port = 3306
     to_port = 3306
     protocol = "tcp"
-    cidr_blocks = ["${var.cidrs}"]
     description = "${var.description}"
+    self = true
   }
 
   egress {
