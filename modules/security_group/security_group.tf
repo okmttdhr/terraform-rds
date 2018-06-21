@@ -7,7 +7,6 @@ variable cidrs {
 
 resource "aws_security_group" "default" {
   name = "${var.name}"
-  description = "${var.description}"
   vpc_id = "${var.vpc_id}"
 
   ingress {
@@ -15,6 +14,7 @@ resource "aws_security_group" "default" {
     to_port = 3306
     protocol = "tcp"
     cidr_blocks = ["${var.cidrs}"]
+    description = "${var.description}"
   }
 
   egress {
@@ -26,6 +26,10 @@ resource "aws_security_group" "default" {
 
   tags {
     Name = "${var.name}"
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
