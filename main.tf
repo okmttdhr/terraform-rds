@@ -11,6 +11,7 @@ variable "sg_description" { }
 
 variable "subnet_cidr_1" { }
 variable "subnet_cidr_2" { }
+variable "subnet_cidr_3" { }
 
 variable "rds_identifier" { }
 variable "rds_storage" { }
@@ -39,6 +40,7 @@ module "subnet" {
   vpc_id = "${module.vpc.vpc_id}"
   cidr_1 = "${var.subnet_cidr_1}"
   cidr_2 = "${var.subnet_cidr_2}"
+  cidr_3 = "${var.subnet_cidr_3}"
   az_1 = "${var.az_1}"
   az_2 = "${var.az_2}"
 }
@@ -55,8 +57,8 @@ module "db_subnet_group" {
   source = "./modules/db_subnet_group"
 
   name = "${var.name}"
-  subnet_id_1 = "${module.subnet.subnet_1_id}"
-  subnet_id_2 = "${module.subnet.subnet_2_id}"
+  subnet_id_1 = "${module.subnet.rds_subnet_1_id}"
+  subnet_id_2 = "${module.subnet.rds_subnet_2_id}"
 }
 
 module "db_instance" {
