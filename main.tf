@@ -70,6 +70,6 @@ module "db_instance" {
   name = "${var.name}"
   username = "${var.rds_username}"
   password = "${var.rds_password}"
-  security_group_id = "${module.security_group.security_group_id}"
+  security_group_id = "${module.security_group.rds_id}"
   db_subnet_group_id = "${module.db_subnet_group.db_subnet_group_id}"
 }
