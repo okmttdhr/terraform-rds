@@ -12,6 +12,7 @@ sg_description = "Permit access from the security group of Lambda."
 subnet_cidr_1 = "10.0.1.0/24"
 subnet_cidr_2 = "10.0.2.0/24"
 subnet_cidr_3 = "10.0.3.0/24"
+subnet_cidr_4 = "10.0.4.0/24"
 
 rds_identifier = "your_rds_identifier"
 rds_storage = 100
