@@ -7,7 +7,9 @@ variable "az_2" { }
 
 variable "vpc_cidr" { }
 
-variable "sg_description" { }
+variable "sg_my_ip" { }
+variable "sg_description_rds" { }
+variable "sg_description_ec2" { }
 
 variable "subnet_cidr_1" { }
 variable "subnet_cidr_2" { }
@@ -53,8 +55,10 @@ module "security_group" {
   source = "./modules/security_group"
 
   name = "${var.name}"
-  description = "${var.sg_description}"
   vpc_id = "${module.vpc.vpc_id}"
+  my_ip = "${module.vpc.sg_my_ip}"
+  description_ec2 = "${var.sg_description_ec2}"
+  description_rds = "${var.sg_description_rds}"
 }
 
 module "db_subnet_group" {
