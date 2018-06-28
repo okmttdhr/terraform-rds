@@ -13,6 +13,7 @@ variable "subnet_cidr_1" { }
 variable "subnet_cidr_2" { }
 variable "subnet_cidr_3" { }
 variable "subnet_cidr_4" { }
+variable "subnet_cidr_5" { }
 
 variable "rds_identifier" { }
 variable "rds_storage" { }
@@ -43,6 +44,7 @@ module "subnet" {
   cidr_2 = "${var.subnet_cidr_2}"
   cidr_3 = "${var.subnet_cidr_3}"
   cidr_4 = "${var.subnet_cidr_4}"
+  cidr_5 = "${var.subnet_cidr_5}"
   az_1 = "${var.az_1}"
   az_2 = "${var.az_2}"
 }
