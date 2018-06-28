@@ -83,3 +83,23 @@ module "db_instance" {
   security_group_id = "${module.security_group.rds_id}"
   db_subnet_group_id = "${module.db_subnet_group.db_subnet_group_id}"
 }
+
+module "ec2" {
+  source = "./modules/ec2"
+
+  name             = "${var.name}"
+  ami              = "${var.ami}"
+  ebs_optimized    = "${var.ebs_optimized}"
+  monitoring       = "${var.monitoring}"
+  key_name         = "${var.key_name}"
+  public_key_path  = "${var.public_key_path}"
+  subnet_id        = "${module.subnet.ec2_id}"
+  sg_ids           = ["${module.security_group.ec2_id}"]
+  nodes                       = "${var.nodes}"
+  instance_type               = "${var.instance_type}"
+  associate_public_ip_address = "${var.associate_public_ip_address}"
+  source_dest_check           = "${var.source_dest_check}"
+  volume_type                 = "${var.volume_type}"
+  volume_size                 = "${var.volume_size}"
+  delete_on_termination       = "${var.delete_on_termination}"
+}
