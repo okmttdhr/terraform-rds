@@ -25,6 +25,14 @@ variable "rds_instance_class" { }
 variable "rds_username" { }
 variable "rds_password" { }
 
+variable "key_name" {}
+variable "public_key_path" {}
+variable "instance_type" {}
+variable "associate_public_ip_address" {}
+variable "volume_type" {}
+variable "volume_size" {}
+variable "delete_on_termination" {}
+
 provider "aws" {
   region  = "${var.region}"
   profile = "${var.profile}"
@@ -56,7 +64,7 @@ module "security_group" {
 
   name = "${var.name}"
   vpc_id = "${module.vpc.vpc_id}"
-  my_ip = "${module.vpc.sg_my_ip}"
+  my_ip = "${var.sg_my_ip}"
   description_ec2 = "${var.sg_description_ec2}"
   description_rds = "${var.sg_description_rds}"
 }
@@ -88,17 +96,12 @@ module "ec2" {
   source = "./modules/ec2"
 
   name             = "${var.name}"
-  ami              = "${var.ami}"
-  ebs_optimized    = "${var.ebs_optimized}"
-  monitoring       = "${var.monitoring}"
   key_name         = "${var.key_name}"
   public_key_path  = "${var.public_key_path}"
   subnet_id        = "${module.subnet.ec2_id}"
   sg_ids           = ["${module.security_group.ec2_id}"]
-  nodes                       = "${var.nodes}"
   instance_type               = "${var.instance_type}"
   associate_public_ip_address = "${var.associate_public_ip_address}"
-  source_dest_check           = "${var.source_dest_check}"
   volume_type                 = "${var.volume_type}"
   volume_size                 = "${var.volume_size}"
   delete_on_termination       = "${var.delete_on_termination}"

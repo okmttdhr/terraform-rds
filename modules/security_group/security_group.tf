@@ -75,3 +75,4 @@ resource "aws_security_group" "rds" {
 
 output "rds_id" { value = "${aws_security_group.rds.id}"}
 output "lambda_id" { value = "${aws_security_group.lambda.id}"}
+output "ec2_id" { value = "${aws_security_group.ec2.id}"}

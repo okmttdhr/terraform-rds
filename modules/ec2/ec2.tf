@@ -1,37 +1,44 @@
 variable "name"                        { }
-variable "ami"                         { }
-variable "ebs_optimized"               { }
 variable "instance_type"               { }
-variable "monitoring"                  { }
 variable "key_name"                    { }
 variable "public_key_path"             { }
 variable "subnet_id"                   { }
 variable "sg_ids"                      {
   type = "list"
 }
-variable "nodes"                       { }
 variable "associate_public_ip_address" { }
-variable "source_dest_check"           { }
 variable "volume_type"                 { }
 variable "volume_size"                 { }
 variable "delete_on_termination"       { }
 
-resource "aws_key_pair" "tf-key" {
+data "aws_ami" "ubuntu" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical
+}
+
+resource "aws_key_pair" "default" {
   key_name   = "${var.key_name}"
   public_key = "${file(var.public_key_path)}"
 }
 
 resource "aws_instance" "default" {
-  ami                         = "${var.ami}"
-  ebs_optimized               = "${var.ebs_optimized}"
+  ami                         = "${data.aws_ami.ubuntu.id}"
   instance_type               = "${var.instance_type}"
-  monitoring                  = "${var.monitoring}"
-  key_name                    = "${aws_key_pair.tf-key.key_name}"
+  key_name                    = "${aws_key_pair.default.key_name}"
   subnet_id                   = "${var.subnet_id}"
   vpc_security_group_ids      = ["${var.sg_ids}"]
-  count                       = "${var.nodes}"
   associate_public_ip_address = "${var.associate_public_ip_address}"
-  source_dest_check           = "${var.source_dest_check}"
 
   root_block_device {
     volume_type           = "${var.volume_type}"
