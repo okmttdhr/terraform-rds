@@ -25,13 +25,13 @@ variable "rds_instance_class" { }
 variable "rds_username" { }
 variable "rds_password" { }
 
-variable "key_name" {}
-variable "public_key_path" {}
-variable "instance_type" {}
-variable "associate_public_ip_address" {}
-variable "volume_type" {}
-variable "volume_size" {}
-variable "delete_on_termination" {}
+variable "ec2_key_name" {}
+variable "ec2_public_key_path" {}
+variable "ec2_instance_type" {}
+variable "ec2_associate_public_ip_address" {}
+variable "ec2_volume_type" {}
+variable "ec2_volume_size" {}
+variable "ec2_delete_on_termination" {}
 
 provider "aws" {
   region  = "${var.region}"
@@ -96,13 +96,13 @@ module "ec2" {
   source = "./modules/ec2"
 
   name             = "${var.name}"
-  key_name         = "${var.key_name}"
-  public_key_path  = "${var.public_key_path}"
+  key_name         = "${var.ec2_key_name}"
+  public_key_path  = "${var.ec2_public_key_path}"
   subnet_id        = "${module.subnet.ec2_id}"
   sg_ids           = ["${module.security_group.ec2_id}"]
-  instance_type               = "${var.instance_type}"
-  associate_public_ip_address = "${var.associate_public_ip_address}"
-  volume_type                 = "${var.volume_type}"
-  volume_size                 = "${var.volume_size}"
-  delete_on_termination       = "${var.delete_on_termination}"
+  instance_type               = "${var.ec2_instance_type}"
+  associate_public_ip_address = "${var.ec2_associate_public_ip_address}"
+  volume_type                 = "${var.ec2_volume_type}"
+  volume_size                 = "${var.ec2_volume_size}"
+  delete_on_termination       = "${var.ec2_delete_on_termination}"
 }
