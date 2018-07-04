@@ -3,6 +3,7 @@ variable storage { }
 variable engine { }
 variable engine_version { }
 variable instance_class { }
+variable storage_type { }
 variable name { }
 variable username { }
 variable password { }
