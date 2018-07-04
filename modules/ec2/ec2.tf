@@ -36,4 +36,9 @@ resource "aws_instance" "default" {
   }
 }
 
+resource "aws_eip" "lb" {
+  instance = "${aws_instance.default.id}"
+  vpc = true
+}
+
 output "id" { value = ["${aws_instance.default.*.id}"] }
