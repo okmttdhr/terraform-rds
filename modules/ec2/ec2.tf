@@ -1,31 +1,16 @@
-variable "name"                        { }
-variable "instance_type"               { }
-variable "key_name"                    { }
-variable "public_key_path"             { }
-variable "subnet_id"                   { }
-variable "sg_ids"                      {
+variable "name" { }
+variable "ami" { }
+variable "key_name" { }
+variable "public_key_path" { }
+variable "subnet_id" { }
+variable "sg_ids" {
   type = "list"
 }
+variable "instance_type" { }
 variable "associate_public_ip_address" { }
-variable "volume_type"                 { }
-variable "volume_size"                 { }
-variable "delete_on_termination"       { }
-
-data "aws_ami" "ubuntu" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
-}
+variable "volume_type" { }
+variable "volume_size" { }
+variable "delete_on_termination" { }
 
 resource "aws_key_pair" "default" {
   key_name   = "${var.key_name}"
@@ -33,7 +18,7 @@ resource "aws_key_pair" "default" {
 }
 
 resource "aws_instance" "default" {
-  ami                         = "${data.aws_ami.ubuntu.id}"
+  ami                         = "${var.ami}"
   instance_type               = "${var.instance_type}"
   key_name                    = "${aws_key_pair.default.key_name}"
   subnet_id                   = "${var.subnet_id}"

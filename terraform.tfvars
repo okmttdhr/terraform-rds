@@ -29,6 +29,7 @@ rds_maintenance_window = "Mon:17:00-Mon:18:00"
 rds_backup_window = "19:00-20:00"
 rds_backup_retention_period = "7"
 
+ec2_ami = "ami-e99f4896" // Amazon Linux 2 AMI (HVM), SSD Volume Type
 ec2_key_name = "tf-key"
 ec2_public_key_path = "~/.ssh/tf-key.pub"
 ec2_instance_type = "t2.micro"

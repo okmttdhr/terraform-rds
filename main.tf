@@ -29,6 +29,7 @@ variable "rds_maintenance_window" { }
 variable "rds_backup_window" { }
 variable "rds_backup_retention_period" { }
 
+variable "ec2_ami" {}
 variable "ec2_key_name" {}
 variable "ec2_public_key_path" {}
 variable "ec2_instance_type" {}
@@ -103,14 +104,15 @@ module "db_instance" {
 module "ec2" {
   source = "./modules/ec2"
 
-  name             = "${var.name}"
-  key_name         = "${var.ec2_key_name}"
-  public_key_path  = "${var.ec2_public_key_path}"
-  subnet_id        = "${module.subnet.public_a_id}"
-  sg_ids           = ["${module.security_group.ec2_id}"]
-  instance_type               = "${var.ec2_instance_type}"
+  name = "${var.name}"
+  ami = "${var.ec2_ami}"
+  key_name = "${var.ec2_key_name}"
+  public_key_path = "${var.ec2_public_key_path}"
+  subnet_id = "${module.subnet.public_a_id}"
+  sg_ids = ["${module.security_group.ec2_id}"]
+  instance_type = "${var.ec2_instance_type}"
   associate_public_ip_address = "${var.ec2_associate_public_ip_address}"
-  volume_type                 = "${var.ec2_volume_type}"
-  volume_size                 = "${var.ec2_volume_size}"
-  delete_on_termination       = "${var.ec2_delete_on_termination}"
+  volume_type = "${var.ec2_volume_type}"
+  volume_size = "${var.ec2_volume_size}"
+  delete_on_termination = "${var.ec2_delete_on_termination}"
 }
