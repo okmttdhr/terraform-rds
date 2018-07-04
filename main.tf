@@ -73,8 +73,8 @@ module "db_subnet_group" {
   source = "./modules/db_subnet_group"
 
   name = "${var.name}"
-  subnet_id_1 = "${module.subnet.rds_subnet_1_id}"
-  subnet_id_2 = "${module.subnet.rds_subnet_2_id}"
+  subnet_id_1 = "${module.subnet.private_a_id}"
+  subnet_id_2 = "${module.subnet.private_c_id}"
 }
 
 module "db_instance" {
@@ -98,7 +98,7 @@ module "ec2" {
   name             = "${var.name}"
   key_name         = "${var.ec2_key_name}"
   public_key_path  = "${var.ec2_public_key_path}"
-  subnet_id        = "${module.subnet.ec2_id}"
+  subnet_id        = "${module.subnet.public_a_id}"
   sg_ids           = ["${module.security_group.ec2_id}"]
   instance_type               = "${var.ec2_instance_type}"
   associate_public_ip_address = "${var.ec2_associate_public_ip_address}"
