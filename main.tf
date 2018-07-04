@@ -22,6 +22,7 @@ variable "rds_storage" { }
 variable "rds_engine" { }
 variable "rds_engine_version" { }
 variable "rds_instance_class" { }
+variable "rds_storage_type" { }
 variable "rds_username" { }
 variable "rds_password" { }
 variable "rds_maintenance_window" { }
@@ -88,6 +89,7 @@ module "db_instance" {
   engine = "${var.rds_engine}"
   engine_version = "${var.rds_engine_version}"
   instance_class = "${var.rds_instance_class}"
+  storage_type = "${var.rds_storage_type}"
   name = "${var.name}"
   username = "${var.rds_username}"
   password = "${var.rds_password}"
