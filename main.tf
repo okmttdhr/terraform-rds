@@ -37,6 +37,7 @@ variable "ec2_associate_public_ip_address" {}
 variable "ec2_volume_type" {}
 variable "ec2_volume_size" {}
 variable "ec2_delete_on_termination" {}
+variable "eip_id" {}
 
 provider "aws" {
   region  = "${var.region}"
@@ -115,4 +116,5 @@ module "ec2" {
   volume_type = "${var.ec2_volume_type}"
   volume_size = "${var.ec2_volume_size}"
   delete_on_termination = "${var.ec2_delete_on_termination}"
+  eip_id = "${var.eip_id}"
 }

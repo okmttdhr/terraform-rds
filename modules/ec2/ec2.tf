@@ -11,6 +11,7 @@ variable "associate_public_ip_address" { }
 variable "volume_type" { }
 variable "volume_size" { }
 variable "delete_on_termination" { }
+variable "eip_id" { }
 
 resource "aws_key_pair" "default" {
   key_name   = "${var.key_name}"
@@ -36,13 +37,13 @@ resource "aws_instance" "default" {
   }
 }
 
-resource "aws_eip" "lb" {
-  instance = "${aws_instance.default.id}"
-  vpc = true
+data "aws_eip" "default" {
+  id = "${var.eip_id}"
+}
 
-  tags {
-    "Name"    = "${var.name}"
-  }
+resource "aws_eip_association" "default" {
+  instance_id = "${aws_instance.default.id}"
+  allocation_id = "${data.aws_eip.default.id}"
 }
 
 output "id" { value = ["${aws_instance.default.*.id}"] }
