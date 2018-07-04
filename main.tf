@@ -24,6 +24,9 @@ variable "rds_engine_version" { }
 variable "rds_instance_class" { }
 variable "rds_username" { }
 variable "rds_password" { }
+variable "rds_maintenance_window" { }
+variable "rds_backup_window" { }
+variable "rds_backup_retention_period" { }
 
 variable "ec2_key_name" {}
 variable "ec2_public_key_path" {}
@@ -90,6 +93,9 @@ module "db_instance" {
   password = "${var.rds_password}"
   security_group_id = "${module.security_group.rds_id}"
   db_subnet_group_id = "${module.db_subnet_group.db_subnet_group_id}"
+  maintenance_window = "${var.rds_maintenance_window}"
+  backup_window = "${var.rds_backup_window}"
+  backup_retention_period = "${var.rds_backup_retention_period}"
 }
 
 module "ec2" {

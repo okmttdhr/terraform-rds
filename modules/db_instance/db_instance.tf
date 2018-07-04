@@ -8,6 +8,9 @@ variable username { }
 variable password { }
 variable security_group_id { }
 variable db_subnet_group_id { }
+variable maintenance_window { }
+variable backup_window { }
+variable backup_retention_period { }
 
 resource "aws_db_instance" "default" {
   identifier = "${var.identifier}"
@@ -21,4 +24,7 @@ resource "aws_db_instance" "default" {
   vpc_security_group_ids = ["${var.security_group_id}"]
   db_subnet_group_name = "${var.db_subnet_group_id}"
   publicly_accessible = true
+  maintenance_window = "${var.maintenance_window}"
+  backup_window = "${var.backup_window}"
+  backup_retention_period = "${var.backup_retention_period}"
 }
