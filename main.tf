@@ -91,7 +91,7 @@ module "db_instance" {
   engine_version = "${var.rds_engine_version}"
   instance_class = "${var.rds_instance_class}"
   storage_type = "${var.rds_storage_type}"
-  name = "${var.name}"
+  name = "${var.name}" // create db manually if you want to add multiple dbs
   username = "${var.rds_username}"
   password = "${var.rds_password}"
   security_group_id = "${module.security_group.rds_id}"
