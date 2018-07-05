@@ -19,6 +19,7 @@ resource "aws_db_instance" "default" {
   engine = "${var.engine}"
   engine_version = "${var.engine_version}"
   instance_class = "${var.instance_class}"
+  storage_type = "${var.storage_type}"
   name = "${var.name}"
   username = "${var.username}"
   password = "${var.password}"
