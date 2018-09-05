@@ -17,16 +17,14 @@ variable "subnet_cidr_3" { }
 variable "subnet_cidr_4" { }
 variable "subnet_cidr_5" { }
 
-variable "rds_identifier" { }
-variable "rds_storage" { }
+variable "rds_cluster_identifier" { }
 variable "rds_engine" { }
-variable "rds_engine_version" { }
-variable "rds_instance_class" { }
-variable "rds_storage_type" { }
-variable "rds_username" { }
-variable "rds_password" { }
-variable "rds_maintenance_window" { }
-variable "rds_backup_window" { }
+variable "rds_engine_mode" { }
+variable "rds_database_name" { }
+variable "rds_master_username" { }
+variable "rds_master_password" { }
+variable "rds_preferred_maintenance_window" { }
+variable "rds_preferred_backup_window" { }
 variable "rds_backup_retention_period" { }
 
 variable "ec2_ami" {}
@@ -42,6 +40,7 @@ variable "eip_id" {}
 provider "aws" {
   region  = "${var.region}"
   profile = "${var.profile}"
+  version = "~> 1.33.0"
 }
 
 module "vpc" {
@@ -86,20 +85,16 @@ module "db_subnet_group" {
 module "db_instance" {
   source = "./modules/db_instance"
 
-  identifier = "${var.rds_identifier}"
-  storage = "${var.rds_storage}"
-  engine = "${var.rds_engine}"
-  engine_version = "${var.rds_engine_version}"
-  instance_class = "${var.rds_instance_class}"
-  storage_type = "${var.rds_storage_type}"
-  name = "${var.name}" // create db manually if you want to add multiple dbs
-  username = "${var.rds_username}"
-  password = "${var.rds_password}"
-  security_group_id = "${module.security_group.rds_id}"
-  db_subnet_group_id = "${module.db_subnet_group.db_subnet_group_id}"
-  maintenance_window = "${var.rds_maintenance_window}"
-  backup_window = "${var.rds_backup_window}"
-  backup_retention_period = "${var.rds_backup_retention_period}"
+  cluster_identifier            = "${var.rds_cluster_identifier}"
+  engine                        = "${var.rds_engine}"
+  engine_mode                   = "${var.rds_engine_mode}"
+  database_name                 = "${var.rds_database_name}"
+  master_username               = "${var.rds_master_username}"
+  master_password               = "${var.rds_master_password}"
+  backup_retention_period       = "${var.rds_backup_retention_period}"
+  preferred_backup_window       = "${var.rds_preferred_backup_window}"
+  preferred_maintenance_window  = "${var.rds_preferred_maintenance_window}"
+  db_subnet_group_name          = "${module.db_subnet_group.db_subnet_group_id}"
 }
 
 module "ec2" {
