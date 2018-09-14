@@ -8,6 +8,7 @@ variable db_subnet_group_name { }
 variable preferred_maintenance_window { }
 variable preferred_backup_window { }
 variable backup_retention_period { }
+variable vpc_security_group_ids { }
 
 resource "aws_rds_cluster" "default" {
   cluster_identifier            = "${var.cluster_identifier}"
@@ -20,4 +21,5 @@ resource "aws_rds_cluster" "default" {
   preferred_backup_window       = "${var.preferred_backup_window}"
   preferred_maintenance_window  = "${var.preferred_maintenance_window}"
   db_subnet_group_name          = "${var.db_subnet_group_name}"
+  vpc_security_group_ids        = ["${var.vpc_security_group_ids}"]
 }

@@ -95,6 +95,7 @@ module "db_instance" {
   preferred_backup_window       = "${var.rds_preferred_backup_window}"
   preferred_maintenance_window  = "${var.rds_preferred_maintenance_window}"
   db_subnet_group_name          = "${module.db_subnet_group.db_subnet_group_id}"
+  vpc_security_group_ids        = "${module.security_group.rds_id}"
 }
 
 module "ec2" {
