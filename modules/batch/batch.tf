@@ -55,10 +55,6 @@ resource "aws_iam_role_policy_attachment" "aws_batch_service_role" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSBatchServiceRole"
 }
 
-resource "aws_security_group" "sample" {
-  name = "aws_batch_compute_environment_security_group"
-}
-
 resource "aws_batch_compute_environment" "default" {
   compute_environment_name = "${var.name}"
   compute_resources {
