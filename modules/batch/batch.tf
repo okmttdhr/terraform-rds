@@ -5,7 +5,7 @@ variable "subnet_id" { }
 variable "name" { }
 
 resource "aws_iam_role" "ecs_instance_role" {
-  name = "ecs_instance_role"
+  name = "${var.name}_ecs_instance_role"
   assume_role_policy = <<EOF
 {
     "Version": "2012-10-17",
@@ -27,13 +27,13 @@ resource "aws_iam_role_policy_attachment" "ecs_instance_role" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
 }
 
-resource "aws_iam_instance_profile" "ecs_instance_role" {
-  name  = "ecs_instance_role"
+resource "aws_iam_instance_profile" "default" {
+  name  = "${var.name}_aws_iam_instance_profile"
   role = "${aws_iam_role.ecs_instance_role.name}"
 }
 
 resource "aws_iam_role" "aws_batch_service_role" {
-  name = "aws_batch_service_role"
+  name  = "${var.name}_aws_batch_service_role"
   assume_role_policy = <<EOF
 {
     "Version": "2012-10-17",
@@ -58,7 +58,7 @@ resource "aws_iam_role_policy_attachment" "aws_batch_service_role" {
 resource "aws_batch_compute_environment" "default" {
   compute_environment_name = "${var.name}"
   compute_resources {
-    instance_role = "${aws_iam_instance_profile.ecs_instance_role.arn}"
+    instance_role = "${aws_iam_instance_profile.default.arn}"
     instance_type = [
       "t2.micro",
     ]
