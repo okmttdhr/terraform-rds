@@ -64,9 +64,9 @@ resource "aws_batch_compute_environment" "default" {
   compute_resources {
     instance_role = "${aws_iam_instance_profile.ecs_instance_role.arn}"
     instance_type = [
-      "c4.large",
+      "t2.micro",
     ]
-    max_vcpus = 16
+    max_vcpus = 1
     min_vcpus = 0
     security_group_ids = [
       "${var.sg_ids}"
