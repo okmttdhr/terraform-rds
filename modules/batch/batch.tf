@@ -60,7 +60,7 @@ resource "aws_batch_compute_environment" "default" {
   compute_resources {
     instance_role = "${aws_iam_instance_profile.default.arn}"
     instance_type = [
-      "m5.large",
+      "m3.medium",
     ]
     max_vcpus = 1
     min_vcpus = 0
