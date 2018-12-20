@@ -8,16 +8,16 @@ resource "aws_iam_role" "ecs_instance_role" {
   name = "${var.name}_ecs_instance_role"
   assume_role_policy = <<EOF
 {
-    "Version": "2012-10-17",
-    "Statement": [
+  "Version": "2012-10-17",
+  "Statement": [
     {
-        "Action": "sts:AssumeRole",
-        "Effect": "Allow",
-        "Principal": {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
         "Service": "ec2.amazonaws.com"
-        }
+      }
     }
-    ]
+  ]
 }
 EOF
 }
@@ -36,16 +36,16 @@ resource "aws_iam_role" "aws_batch_service_role" {
   name  = "${var.name}_aws_batch_service_role"
   assume_role_policy = <<EOF
 {
-    "Version": "2012-10-17",
-    "Statement": [
+  "Version": "2012-10-17",
+  "Statement": [
     {
-        "Action": "sts:AssumeRole",
-        "Effect": "Allow",
-        "Principal": {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
         "Service": "batch.amazonaws.com"
-        }
+      }
     }
-    ]
+  ]
 }
 EOF
 }
@@ -55,6 +55,28 @@ resource "aws_iam_role_policy_attachment" "aws_batch_service_role" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSBatchServiceRole"
 }
 
+resource "aws_iam_role" "ec2_spot_fleet_role" {
+  name  = "${var.name}_ec2_spot_fleet_role"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "spotfleet.amazonaws.com"
+      }
+    }
+  ]
+}
+EOF
+}
+resource "aws_iam_role_policy_attachment" "ec2_spot_fleet_role" {
+  role       = "${aws_iam_role.ec2_spot_fleet_role.name}"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2SpotFleetRole"
+}
+
 resource "aws_batch_compute_environment" "default" {
   compute_environment_name = "${var.name}"
   compute_resources {
@@ -62,6 +84,7 @@ resource "aws_batch_compute_environment" "default" {
     instance_type = [
       "m3.medium",
     ]
+    desired_vcpus = 1
     max_vcpus = 1
     min_vcpus = 0
     security_group_ids = [
@@ -70,7 +93,9 @@ resource "aws_batch_compute_environment" "default" {
     subnets = [
       "${var.subnet_id}"
     ]
-    type = "EC2"
+    bid_percentage = 50
+    spot_iam_fleet_role = "${aws_iam_role.ec2_spot_fleet_role.arn}"
+    type = "SPOT"
   }
   service_role = "${aws_iam_role.aws_batch_service_role.arn}"
   type = "MANAGED"
@@ -120,4 +145,8 @@ resource "aws_batch_job_queue" "default" {
   state = "ENABLED"
   priority = 1
   compute_environments = ["${aws_batch_compute_environment.default.arn}"]
+  
+  lifecycle {
+    create_before_destroy = true
+  }
 }
