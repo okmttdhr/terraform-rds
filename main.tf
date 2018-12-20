@@ -114,3 +114,11 @@ module "ec2" {
   delete_on_termination = "${var.ec2_delete_on_termination}"
   eip_id = "${var.eip_id}"
 }
+
+module "batch" {
+  source = "./modules/batch"
+
+  name = "${var.name}"
+  subnet_id = "${module.subnet.public_a_id}"
+  sg_ids = ["${module.security_group.lambda_id}"]
+}
