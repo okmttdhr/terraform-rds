@@ -102,8 +102,9 @@ resource "aws_batch_compute_environment" "default" {
   depends_on = ["aws_iam_role_policy_attachment.aws_batch_service_role"]
 }
 
+# テスト用。ジョブ定義は別リポジトリで作成する。
 resource "aws_batch_job_definition" "default" {
-    name = "${var.name}"
+    name = "${var.name}_test"
     type = "container"
     container_properties = <<CONTAINER_PROPERTIES
 {
